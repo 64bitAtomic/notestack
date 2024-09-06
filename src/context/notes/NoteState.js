@@ -70,8 +70,18 @@ const NoteState = (props) => {
   const [notes, setNotes] = useState(notesInitial);
 
   // Function to add a note
-  const addNote=()=>{
-    // ***********React js cwh #63 yt 2:30
+  const addNote=(title,description,tag)=>{
+    console.log("Adding a New Note.....");
+    const note =  {
+      "_id": "66d81255086049aac67feaa52123",
+      "user": "66d315683f92ed3e5e7b4695",
+      "title": title,
+      "description": description,
+      "tag": tag,
+      "date": "2024-09-04T07:55:01.179Z",
+      "__v": 0
+    };
+    setNotes(notes.concat(note));
   }
   // Function to delete a note
   const deleteNote=()=>{
