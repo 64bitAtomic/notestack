@@ -71,10 +71,6 @@ export const Notes = () => {
       <div className="row my-3">
         <h1>Your Notes</h1>
         <div className="container mx-1 my-2 text-white" style={{ fontSize: 24 }}>{notes.length === 0 && <>
-          {/* {"Please add a Note "}
-          <div className="toast-body">
-            Hello, world! This is a toast message.     <i className="fa-regular fa-file-lines"></i>
-          </div> */}
           <div className="card text-bg-dark mb-3" >
             <div className="card-header">Empty Note Stack <i className="fa-regular fa-file-lines"></i> </div>
             <div className="card-body">
