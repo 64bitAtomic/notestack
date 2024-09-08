@@ -5,8 +5,8 @@ import AddNote from './AddNote';
 
 export const Notes = () => {
   const context = useContext(noteContext);
-  const { notes, getNotes , editNote} = context;
-  const [note, setNote] = useState({ id:"",etitle: "", edescription: "", etag: "default" });
+  const { notes, getNotes, editNote } = context;
+  const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "default" });
   useEffect(() => {
     getNotes();
     // eslint-disable-next-line 
@@ -14,16 +14,17 @@ export const Notes = () => {
 
   const UpdateNote = (currentNote) => {
     ref.current.click();
-    setNote({id: currentNote._id ,etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
+    setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
+
   }
   const ref = useRef(null);
   const refClose = useRef(null);
 
   const handleClick = (e) => {
     console.log("Updating note.......", note);
-    editNote(note.id,note.etitle,note.edescription,note.etag);
+    editNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
-   // e.preventDefault();
+    // e.preventDefault();
 
   }
   const onChange = (e) => {
@@ -32,7 +33,7 @@ export const Notes = () => {
 
   return (
     <>
-      <AddNote />
+      <AddNote key={notes._id} />
       <button ref={ref} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
       </button>
@@ -47,11 +48,11 @@ export const Notes = () => {
               <form>
                 <div className="mb-3">
                   <label htmlFor="etitle" className="form-label ">Title</label>
-                  <input type="text" className="form-control" id="etitle" name='etitle' value={note.etitle} aria-describedby="emailHelp" onChange={onChange} />
+                  <input type="text" className="form-control" id="etitle" name='etitle' value={note.etitle} aria-describedby="emailHelp" onChange={onChange} minLength={5} required />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="edescription" className="form-label">Description</label>
-                  <input type="text" className="form-control" id="edescription" name='edescription' value={note.edescription} onChange={onChange} />
+                  <input type="text" className="form-control" id="edescription" name='edescription' value={note.edescription} onChange={onChange} minLength={5} required />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="etag" className="form-label">Tag</label>
@@ -62,13 +63,29 @@ export const Notes = () => {
             </div>
             <div className="modal-footer">
               <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
+              <button disabled={note.etitle.length < 5 || note.edescription.length < 5} onClick={handleClick} type="button" className="btn btn-primary">Update Note</button>
             </div>
           </div>
         </div>
       </div>
       <div className="row my-3">
         <h1>Your Notes</h1>
+        <div className="container mx-1 my-2 text-white" style={{ fontSize: 24 }}>{notes.length === 0 && <>
+          {/* {"Please add a Note "}
+          <div className="toast-body">
+            Hello, world! This is a toast message.     <i className="fa-regular fa-file-lines"></i>
+          </div> */}
+          <div className="card text-bg-dark mb-3" >
+            <div className="card-header">Empty Note Stack <i className="fa-regular fa-file-lines"></i> </div>
+            <div className="card-body">
+              <h5 className="card-title">Add a Note</h5>
+              <p className="card-text">Title and Description must be more then 5 characters.</p>
+            </div>
+          </div>
+
+
+
+        </>}</div>
         {notes.map((notes) => {
           return <NoteItem key={notes._id} UpdateNote={UpdateNote} note={notes} />
         })}
