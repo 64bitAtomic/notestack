@@ -62,6 +62,7 @@ routes.post('/login',[
     body('email','Enter an Vaild Name').isLength({min:3}),
     body('password','Password can not be empty').exists()
 ], async (req,res)=>{
+    let success = false;
     const error = validationResult(req);
     if(!error.isEmpty()){
         res.status(400).json({error: error.array()});
@@ -76,7 +77,8 @@ routes.post('/login',[
 
         const passwordCompare = await bcrypt.compare(password,user.password);
         if(!passwordCompare){
-            return res.status(400).json({error: "Login with Legit Credentials."})
+            success = false;
+            return res.status(400).json({success ,error: "Login with Legit Credentials."})
         }
 
         const payload = {
@@ -86,7 +88,8 @@ routes.post('/login',[
         }
 
         const authToken = jwt.sign(payload,JWT_SECRET);
-        res.json({authToken});
+        success= true;
+        res.json({success,authToken});
     } catch (error) {
         console.error(error.message);
         res.send(500).json({error: "Internal Server Error"});
