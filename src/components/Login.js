@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';  
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [credential, setCredential] = useState({email: "",password: ""});
+    const [credential, setCredential] = useState({ email: "", password: "" });
     let history = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -18,15 +18,15 @@ const Login = () => {
         console.log(json);
         if (json.success) {
             // redirect
-            localStorage.setItem('token',json.authtoken);
+            localStorage.setItem('token', json.authtoken);
             history("/");
-        }else{
+        } else {
             alert('Invail Credential.');
         }
     }
     const onChange = (e) => {
         setCredential({ ...credential, [e.target.name]: e.target.value })
-      }
+    }
     return (
         <div className='container card-outline'>
             <form onSubmit={handleSubmit}>
