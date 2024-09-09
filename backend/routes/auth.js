@@ -16,10 +16,11 @@ routes.post('/createuser',
         body('password', 'Password is too weak').isLength({ min: 5 }),
 
     ], async (req, res) => {
+        let success = false;
         // If there are errors , return bad request and the errors
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({success, errors: errors.array() });
         }
 
         try {
@@ -47,7 +48,8 @@ routes.post('/createuser',
             }
             // jwt.sign function to add extra payload in the token
             const authToken = jwt.sign(data,JWT_SECRET);
-            res.json({authToken});
+            success = true;
+            res.json({success,authToken});
         } catch (err) {
             console.log(err.message);
             res.status(500).send("Internal Server Error");
