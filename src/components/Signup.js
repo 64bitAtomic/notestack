@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-const Signup = () => {
+const Signup = (props) => {
   const [credential, setCredential] = useState({name:"",email: "", password: "", cpassword: ""});
   let history = useNavigate();
   const handleSubmit = async (e) => {
@@ -20,8 +20,9 @@ const Signup = () => {
           // redirect
           localStorage.setItem('token', json.authtoken);
           history("/");
+          props.showAlert("Account Created Successfully!","success");
      } else {
-          alert('Invail Credential.');
+          props.showAlert("Invalid Details","danger");
       } 
   }
   const onChange = (e) => {
