@@ -18,7 +18,7 @@ const Signup = (props) => {
       console.log(json);
       if (json.success) {
           // redirect
-          localStorage.setItem('token', json.authtoken);
+          localStorage.setItem('token', json.authToken);
           history("/");
           props.showAlert("Account Created Successfully!","success");
      } else {
